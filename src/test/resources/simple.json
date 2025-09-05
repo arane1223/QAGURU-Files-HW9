@@ -1,0 +1,9 @@
+{
+  "name": "Sergey",
+  "surname": "Glukhov",
+  "music": ["Black Metal", "Death metal"],
+  "address": {
+    "street":"Sheinkmana",
+    "house": "19"
+  }
+}
