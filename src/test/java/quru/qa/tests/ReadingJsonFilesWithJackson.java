@@ -19,6 +19,9 @@ public class ReadingJsonFilesWithJackson {
         Simple jsonObject = objectMapper.readValue(file, Simple.class);
         assertThat(jsonObject.name).isEqualTo("Sergey");
         assertThat(jsonObject.surname).isEqualTo("Glukhov");
+        assertThat(jsonObject.music).hasSize(2);
+        assertThat(jsonObject.music.get(0)).isEqualTo("Black Metal");
+        assertThat(jsonObject.music.get(1)).isEqualTo("Death metal");
         assertThat(jsonObject.address.street).isEqualTo("Sheinkmana");
         assertThat(jsonObject.address.house).isEqualTo(19);
     }
