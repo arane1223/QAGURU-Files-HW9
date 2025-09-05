@@ -35,7 +35,6 @@ private ClassLoader cl = ReadingFilesFromZip.class.getClassLoader();
 
     //На базе кода из источника:
     // https://stackoverflow.com/questions/15667125/read-content-from-files-which-are-inside-zip-file
-    //@Disabled("Не работает хз почему")
     @DisplayName("Тест на чтение данных файлов типа pdf, xlsx, csv внутри zip, опираясь на источник")
     @Test
     void informationInsideFilesFromZipCorrectBaseToStackoverflowTest () throws Exception {
