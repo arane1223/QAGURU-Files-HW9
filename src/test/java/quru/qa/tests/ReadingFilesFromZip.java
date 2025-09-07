@@ -17,55 +17,6 @@ public class ReadingFilesFromZip {
 
     private ClassLoader cl = ReadingFilesFromZip.class.getClassLoader();
 
-    @DisplayName("Чтение pdf из zip")
-    @Test
-    void successfulPdfReadingFromZipTest() throws Exception{
-
-        ZipFile zipFile = new ZipFile(new java.io.File(ZIP_FULL_PATH));
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        while (entries.hasMoreElements()) {
-            ZipEntry entry = entries.nextElement();
-            if (entry.isDirectory()) {
-                if (entry.getName().contains(File.PDF.fileType)) {
-                    assertThat(entry.getName()).isEqualTo(File.PDF.fileName);
-                    checkPdfData(zipFile.getInputStream(entry));
-                }
-            }
-        }
-    }
-
-    @DisplayName("Чтение xlsx из zip")
-    @Test
-    void successfulXlsxReadingFromZipTest() throws Exception{
-        ZipFile zipFile = new ZipFile(new java.io.File(ZIP_FULL_PATH));
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        while (entries.hasMoreElements()) {
-            ZipEntry entry = entries.nextElement();
-            if (entry.isDirectory()) {
-                if (entry.getName().contains(File.XLSX.fileType)) {
-                    assertThat(entry.getName()).isEqualTo(File.XLSX.fileName);
-                    checkXlsxData(zipFile.getInputStream(entry));
-                }
-            }
-        }
-    }
-
-    @DisplayName("Чтение csv из zip")
-    @Test
-    void successfulCsvReadingFromZipTest() throws Exception{
-        ZipFile zipFile = new ZipFile(new java.io.File(ZIP_FULL_PATH));
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        while (entries.hasMoreElements()) {
-            ZipEntry entry = entries.nextElement();
-            if (entry.isDirectory()) {
-                if (entry.getName().contains(File.CSV.fileType)) {
-                    assertThat(entry.getName()).isEqualTo(File.CSV.fileName);
-                    checkCsvData(zipFile.getInputStream(entry));
-                }
-            }
-        }
-    }
-
     @DisplayName("Тесты на чтение соответствие имени файла внутри zip")
     @EnumSource(File.class)
     @ParameterizedTest(name = "Проверка на соответствие имени файла типа {0} в zip архиве")
