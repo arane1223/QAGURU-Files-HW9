@@ -11,8 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import static com.codeborne.pdftest.PDF.containsText;
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.codeborne.pdftest.assertj.Assertions.assertThat;
 
 
 public class FilesZip {
@@ -25,8 +24,8 @@ public class FilesZip {
     }
 
     public static void checkPdfData(InputStream file) throws Exception {
-        com.codeborne.pdftest.PDF pdf = new PDF(file);
-        //assertThat(pdf, containsText("Тестовый PDF-документ"));
+        PDF pdf = new PDF(file);
+        assertThat(pdf).containsText("Тестовый PDF-документ");
     }
 
     public static void checkXlsxData(InputStream file) throws Exception {

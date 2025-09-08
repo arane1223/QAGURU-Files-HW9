@@ -28,8 +28,9 @@ public class SeporatedReadingFilesFromZip {
         while((entry = is.getNextEntry()) != null) {
             assertThat(entry.getName().equals(File.PDF.fileName));
             try (InputStream inputStream = zf.getInputStream(entry)) {
-                PDF pdf = new PDF(inputStream);
-                assertThat(pdf).containsText("Тестовый PDF-документ");;
+                checkPdfData(inputStream);
+//                PDF pdf = new PDF(inputStream);
+//                assertThat(pdf).containsText("Тестовый PDF-документ");
             }
         }
 
