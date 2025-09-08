@@ -40,22 +40,21 @@ public class FilesZip {
     }
 
     public static void checkCsvData(ZipInputStream file) throws Exception {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(file, StandardCharsets.UTF_8))) {
-            List<String[]> data = reader.readAll();
+        CSVReader reader = new CSVReader(new InputStreamReader(file, StandardCharsets.UTF_8));
+        List<String[]> data = reader.readAll();
 
-            Assertions.assertEquals(3, data.size());
-            Assertions.assertArrayEquals(
-                    new String[] {"id", "name", "email", "registration_date"},
-                    data.get(0)
-            );
-            Assertions.assertArrayEquals(
-                    new String[] {"1", "Иван Иванов", "ivan@example.com", "2023-01-15"},
-                    data.get(1)
-            );
-            Assertions.assertArrayEquals(
-                    new String[] {"2", "Петр Петров", "peter@example.com", "2023-02-20"},
-                    data.get(2)
-            );
-        }
+        Assertions.assertEquals(3, data.size());
+        Assertions.assertArrayEquals(
+                new String[] {"id", "name", "email", "registration_date"},
+                data.get(0)
+        );
+        Assertions.assertArrayEquals(
+                new String[] {"1", "Иван Иванов", "ivan@example.com", "2023-01-15"},
+                data.get(1)
+        );
+        Assertions.assertArrayEquals(
+                new String[] {"2", "Петр Петров", "peter@example.com", "2023-02-20"},
+                data.get(2)
+        );
     }
 }
