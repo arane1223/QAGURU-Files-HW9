@@ -2,7 +2,7 @@ package quru.qa.files.data;
 
 public enum File {
     PDF ("test.pdf", "pdf"),
-    XLSX ("ForSale.xlsx", "xlsx"),
+    XLSX ("Generated.xlsx", "xlsx"),
     CSV ("LoginAndPassword.csv", "csv");
 
     public String fileName;

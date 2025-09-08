@@ -7,47 +7,54 @@ import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Assertions;
 import quru.qa.files.data.File;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.zip.ZipInputStream;
 
-import static com.codeborne.pdftest.assertj.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class FilesZip {
 
     public static final String ZIP = "Files.zip";
-    public static final String ZIP_FULL_PATH = "src/test/resources/Files.zip";
+    public static final String ZIP_TEST = "test_files.zip";
+    public static final String ZIP_FULL_PATH = "src/test/resources/test_files.zip";
 
     public static void chekFileNameFromZip (File file) throws Exception {
         Assertions.assertEquals(String.valueOf(file.fileName), file.fileName);
     }
 
-    public static void checkPdfData(InputStream file) throws Exception {
+    public static void checkPdfData(ZipInputStream file) throws Exception {
         PDF pdf = new PDF(file);
-        assertThat(pdf).containsText("Тестовый PDF-документ");
+        assertThat(pdf.text.contains("Sample PDF Content")).isEqualTo(true);
     }
 
-    public static void checkXlsxData(InputStream file) throws Exception {
-        com.codeborne.xlstest.XLS xlsx = new XLS(file);
+    public static void checkXlsxData(ZipInputStream file) throws Exception {
+        byte[] excelData = file.readAllBytes();
+        com.codeborne.xlstest.XLS xlsx = new XLS(excelData);
         assertThat(xlsx.excel.getSheetAt(0)
                 .getRow(0)
-                .getCell(2)
-                .getStringCellValue()
-                .contains("Цена продажи"));
+                .getCell(0)
+                .getStringCellValue()).isEqualTo("Sample Excel Data");
     }
 
-    public static void checkCsvData(InputStream file) throws Exception {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(file))) {
+    public static void checkCsvData(ZipInputStream file) throws Exception {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(file, StandardCharsets.UTF_8))) {
             List<String[]> data = reader.readAll();
-            Assertions.assertEquals(2, data.size());
+
+            Assertions.assertEquals(3, data.size());
             Assertions.assertArrayEquals(
-                    new String[] {"AlexTerrible", "Qwer!1234"},
+                    new String[] {"id", "name", "email", "registration_date"},
                     data.get(0)
             );
             Assertions.assertArrayEquals(
-                    new String[] {"arane1223","Arane@1223"},
+                    new String[] {"1", "Иван Иванов", "ivan@example.com", "2023-01-15"},
                     data.get(1)
+            );
+            Assertions.assertArrayEquals(
+                    new String[] {"2", "Петр Петров", "peter@example.com", "2023-02-20"},
+                    data.get(2)
             );
         }
     }

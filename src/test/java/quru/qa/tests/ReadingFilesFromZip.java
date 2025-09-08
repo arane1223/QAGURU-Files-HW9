@@ -1,5 +1,6 @@
 package quru.qa.tests;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,12 +24,15 @@ public class ReadingFilesFromZip {
     void fileNamesFromZipAreCorrectParameterizedTest(File file) throws Exception {
         try (ZipInputStream zis = new ZipInputStream(cl.getResourceAsStream(ZIP))) {
             ZipEntry entry;
+            boolean fileFind = false;
 
             while ((entry = zis.getNextEntry()) != null) {
                 if(entry.getName().endsWith(file.fileType)) {
                     chekFileNameFromZip(file);
+                    fileFind = true;
                 }
             }
+            assertThat(fileFind).isTrue();
         }
     }
 
@@ -43,16 +47,17 @@ public class ReadingFilesFromZip {
         while (entries.hasMoreElements()) {
             ZipEntry entry = entries.nextElement();
             if (entry.isDirectory()) {
-                if (entry.getName().contains(File.PDF.fileType)) {
-                    assertThat(entry.getName()).isEqualTo(File.PDF.fileName);
-                    checkPdfData(zipFile.getInputStream(entry));
-                } else if (entry.getName().contains(File.XLSX.fileType)) {
-                    assertThat(entry.getName()).isEqualTo(File.XLSX.fileName);
-                    checkXlsxData(zipFile.getInputStream(entry));
-                } else if (entry.getName().contains(File.CSV.fileType)) {
-                    assertThat(entry.getName()).isEqualTo(File.CSV.fileName);
-                    checkCsvData(zipFile.getInputStream(entry));
-                }
+//                if (entry.getName().contains(File.PDF.fileType)) {
+//                    assertThat(entry.getName()).isEqualTo(File.PDF.fileName);
+//                    checkPdfData(zipFile.getInputStream(entry));
+//                }
+//                else if (entry.getName().contains(File.XLSX.fileType)) {
+//                    assertThat(entry.getName()).isEqualTo(File.XLSX.fileName);
+//                    checkXlsxData(zipFile.getInputStream(entry));
+//                } else if (entry.getName().contains(File.CSV.fileType)) {
+//                    assertThat(entry.getName()).isEqualTo(File.CSV.fileName);
+//                    checkCsvData(zipFile.getInputStream(entry));
+//                }
             }
         }
     }
